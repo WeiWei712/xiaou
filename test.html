@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小又</title>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: -1;
+      top: 0;
+      left: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+      text-align: center;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .left {
+      flex: 1 1 60%;
+      overflow: hidden; /* 確保超出容器部分被隱藏 */
+      height: 400px; /* 調整滾動容器的高度 */
+      border: 1px solid #00ffff50;
+    }
+
+    .song-wrapper {
+  display: flex;
+  flex-direction: column; /* 每三個歌名為一組，垂直排列 */
+  animation: marquee-up 25s linear infinite; /* 垂直跑馬燈效果 */
+}
+
+.song-group {
+  display: flex;
+  justify-content: space-between; /* 每排顯示四個歌名，均勻排列 */
+  gap: 5px; /* 歌名之間的間隔 */
+  margin-bottom: 10px; /* 增加組之間的間距 */
+}
+
+.song {
+
+  padding: 15px;
+  border: 1px solid #00ffff50;
+  background-color: #1a1a1a;
+  color: #00ffff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #00ffff50;
+  transition: transform 0.5s ease;
+  text-align: center;
+  text-decoration: none;
+  width: 140px; /* 控制每個歌名的寬度 */
+  height: 30px; /* 控制每個歌名的高度 */
+}
+
+    .song:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #00ffff;
+      background-color: #222;
+      color: #ffffff;
+    }
+
+    @keyframes marquee-up {
+      0% {
+        transform: translateY(3%);
+      }
+      100% {
+        transform: translateY(-100%);
+      }
+
+      
+    }
+
+    .right {
+      flex: 1 1 35%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .right img {
+      width: 100%;
+      max-width: 150px;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .footer {
+     
+      text-align: center;
+      color: #aeaeae;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="container">
+    <h1>𝓗𝔂. 小柚🍰</h1>
+    <div class="content">
+      <div class="left" id="songGrid">
+        <!-- JavaScript 會插入歌曲連結 -->
+        <div class="song-wrapper"></div>
+      </div>
+      <div class="right">
+        <img src="image/xiaou1.png" alt="小又圖片" />
+      </div>
+    </div>
+    <div class="footer">未來無法預料 別吝嗇愛與生活 </div>
+  </div>
+
+  <script>
+    const songs = [
+      { name: "紅色高跟鞋", url: "https://www.youtube.com/results?search_query=紅色高跟鞋+小柚" },
+      { name: "越來越不懂", url: "https://www.youtube.com/results?search_query=越來越不懂+小柚" },
+      { name: "可惜沒如果", url: "https://www.youtube.com/results?search_query=可惜沒如果+小柚" },
+      { name: "只是太愛你", url: "https://www.youtube.com/results?search_query=只是太愛你+小柚" },
+      { name: "會呼吸的痛", url: "https://www.youtube.com/results?search_query=會呼吸的痛+小柚" },
+      { name: "離別開出花", url: "https://www.youtube.com/results?search_query=離別開出花+小柚" },
+      { name: "愛笑的眼睛", url: "https://www.youtube.com/results?search_query=愛笑的眼睛+小柚" },
+      { name: "阿拉斯加海灣", url: "https://www.youtube.com/results?search_query=阿拉斯加海灣+小柚" },
+      { name: "流著淚說分手", url: "https://www.youtube.com/results?search_query=Pixel+Tears+小柚" },
+      { name: "說好了不見面", url: "https://www.youtube.com/results?search_query=Night+Runner+小柚" },
+      { name: "永不失聯的愛", url: "https://www.youtube.com/results?search_query=Synth+Soul+小柚" },
+
+      { name: "他一定很愛你", url: "https://www.youtube.com/results?search_query=紅色高跟鞋+小柚" },
+      { name: "一個人去巴黎", url: "https://www.youtube.com/results?search_query=越來越不懂+小柚" },
+      { name: "蒲公英的約定", url: "https://www.youtube.com/results?search_query=可惜沒如果+小柚" },
+      { name: "去有風的地方", url: "https://www.youtube.com/results?search_query=只是太愛你+小柚" },
+      { name: "說好的幸福呢", url: "https://www.youtube.com/results?search_query=會呼吸的痛+小柚" },
+      { name: "最熟悉的陌生人", url: "https://www.youtube.com/results?search_query=離別開出花+小柚" },
+      { name: "夏夜最後的煙火", url: "https://www.youtube.com/results?search_query=愛笑的眼睛+小柚" },
+      { name: "我落淚情緒零碎", url: "https://www.youtube.com/results?search_query=阿拉斯加海灣+小柚" },
+      { name: "山外小樓夜聽雨", url: "https://www.youtube.com/results?search_query=Pixel+Tears+小柚" },
+      { name: "不為誰而做的歌", url: "https://www.youtube.com/results?search_query=Night+Runner+小柚" },
+      { name: "友情多餘曖昧未夠", url: "https://www.youtube.com/results?search_query=Synth+Soul+小柚" },
+
+      { name: "過火", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "保留", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "小宇", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "愛囚", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "指紋", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "軀殼", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "空白", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "人質", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "走馬", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "稱職", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+
+      { name: "美夢", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "曖昧", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "偏愛", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "體面", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "加油", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "彩虹", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "暖暖", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "晴天", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "江南", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "記得", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      
+
+      { name: "花海", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "退後", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "那年", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "倒帶", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "斷點", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "勇氣", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "唯一", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "嘉賓", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "江南", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "擱淺", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+
+      { name: "童話", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "她說", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "最好", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "雨愛", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "期待愛", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "帶我走", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "學不會", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "想自由", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "月牙灣", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "我可以", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+
+      { name: "美人魚", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "第一次", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "七里香", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "髮如雪", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "後繼者", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "千年淚", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "水星記", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "疑心病", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "安和橋", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "青花瓷", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+
+      { name: "我們倆", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "關鍵詞", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "漠河舞廳", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "第三人稱", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "黑色毛衣", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "修練愛情", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "大城小愛", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "特別的人", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "我還想他", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "愛如潮水", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+
+      { name: "紅塵客棧", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "一路向北", url: "https://www.youtube.com/results?search_query=Firewall+Kiss+小柚" },
+      { name: "我的女人", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "說了再見", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "說好不哭", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "關於我們", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "幻想之痛", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "日落大道", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "斷了的弦", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "我懷念的", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "飛鳥和禪", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "故事還長", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "量身訂做", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "明天過後", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
+      { name: "一眼萬年", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" }
+      
+    ];
+
+    const wrapper = document.querySelector(".song-wrapper");
+
+    // 分組歌名，三個一組
+    for (let i = 0; i < songs.length; i += 3) {
+      const group = songs.slice(i, i + 3); // 每次取三個歌名
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "song-group";
+
+      group.forEach(song => {
+        const a = document.createElement("a");
+        a.className = "song";
+        a.textContent = song.name;
+        a.href = song.url;
+        a.target = "_blank";
+        groupDiv.appendChild(a);
+      });
+
+      wrapper.appendChild(groupDiv);
+    }
+  </script>
+
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 130, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": ["#00ffff", "#ff00ff", "#ffffff", "#00ff88"] },
+        "shape": { "type": ["circle", "triangle", "edge"] },
+        "opacity": {
+          "value": 0.6,
+          "random": true,
+          "anim": { "enable": true, "speed": 1, "opacity_min": 0.2 }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": { "enable": true, "speed": 2, "size_min": 0.3 }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 120,
+          "color": "#00ffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2.5,
+          "direction": "none",
+          "out_mode": "out"
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" },
+          "resize": true
+        },
+        "modes": {
+          "grab": { "distance": 140, "line_linked": { "opacity": 0.8 } },
+          "push": { "particles_nb": 4 }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</body>
+</html>
