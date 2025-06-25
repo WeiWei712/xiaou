@@ -50,11 +50,55 @@
 
     .left {
       flex: 1 1 60%;
-      display: grid;
-      /*grid-template-columns: repeat(5, 1fr); */
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-      justify-content: center;
+      overflow: hidden; /* 確保超出容器部分被隱藏 */
+      height: 400px; /* 調整滾動容器的高度 */
+      border: 1px solid #00ffff50;
+    }
+
+    .song-wrapper {
+  display: flex;
+  flex-direction: column; /* 每三個歌名為一組，垂直排列 */
+  animation: marquee-up 25s linear infinite; /* 垂直跑馬燈效果 */
+}
+
+.song-group {
+  display: flex;
+  justify-content: space-between; /* 每排顯示四個歌名，均勻排列 */
+  gap: 5px; /* 歌名之間的間隔 */
+  margin-bottom: 10px; /* 增加組之間的間距 */
+}
+
+.song {
+
+  padding: 15px;
+  border: 1px solid #00ffff50;
+  background-color: #1a1a1a;
+  color: #00ffff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #00ffff50;
+  transition: transform 0.5s ease;
+  text-align: center;
+  text-decoration: none;
+  width: 140px; /* 控制每個歌名的寬度 */
+  height: 30px; /* 控制每個歌名的高度 */
+}
+
+    .song:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #00ffff;
+      background-color: #222;
+      color: #ffffff;
+    }
+
+    @keyframes marquee-up {
+      0% {
+        transform: translateY(3%);
+      }
+      100% {
+        transform: translateY(-100%);
+      }
+
+      
     }
 
     .right {
@@ -66,34 +110,14 @@
 
     .right img {
       width: 100%;
-      max-width: 400px;
+      max-width: 150px;
       border: none;
       border-radius: 0;
       box-shadow: none;
     }
 
-    .song {
-      display: block;
-      padding: 12px;
-      border: 1px solid #00ffff50;
-      background-color: #1a1a1a;
-      color: #00ffff;
-      border-radius: 10px;
-      box-shadow: 0 0 8px #00ffff50;
-      transition: transform 0.2s ease;
-      text-align: left;
-      text-decoration: none;
-    }
-
-    .song:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 12px #00ffff;
-      background-color: #222;
-      color: #ffffff;
-    }
-
     .footer {
-      margin-top: 40px;
+     
       text-align: center;
       color: #aeaeae;
       font-size: 18px;
@@ -108,12 +132,13 @@
     <div class="content">
       <div class="left" id="songGrid">
         <!-- JavaScript 會插入歌曲連結 -->
+        <div class="song-wrapper"></div>
       </div>
       <div class="right">
         <img src="image/xiaou1.png" alt="小又圖片" />
       </div>
     </div>
-    <div class="footer">未來無法預料 別吝嗇愛與生活 🌌</div>
+    <div class="footer">未來無法預料 別吝嗇愛與生活 </div>
   </div>
 
   <script>
@@ -225,20 +250,27 @@
       { name: "明天過後", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" },
       { name: "一眼萬年", url: "https://www.youtube.com/results?search_query=Zero+One+小柚" }
       
-      
-      
-      // ...你可以繼續補上所有歌曲與對應連結
     ];
 
-    const grid = document.getElementById("songGrid");
-    songs.forEach(song => {
-      const a = document.createElement("a");
-      a.className = "song";
-      a.textContent = song.name;
-      a.href = song.url;
-      a.target = "_blank";
-      grid.appendChild(a);
-    });
+    const wrapper = document.querySelector(".song-wrapper");
+
+    // 分組歌名，三個一組
+    for (let i = 0; i < songs.length; i += 3) {
+      const group = songs.slice(i, i + 3); // 每次取三個歌名
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "song-group";
+
+      group.forEach(song => {
+        const a = document.createElement("a");
+        a.className = "song";
+        a.textContent = song.name;
+        a.href = song.url;
+        a.target = "_blank";
+        groupDiv.appendChild(a);
+      });
+
+      wrapper.appendChild(groupDiv);
+    }
   </script>
 
   <script>
